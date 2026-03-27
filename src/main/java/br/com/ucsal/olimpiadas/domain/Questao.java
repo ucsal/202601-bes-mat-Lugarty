@@ -1,79 +1,66 @@
 package br.com.ucsal.olimpiadas.domain;
 
-import java.util.Arrays;
-
 public class Questao {
+    private Long id;
+    private Long provaId;
+    private String enunciado;
+    private String[] alternativas;
+    private char alternativaCorreta;
+    private String fenInicial;
 
-	private long id;
-	private long provaId;
+    public Long getId() {
+        return id;
+    }
 
-	private String enunciado;
-	private String[] alternativas = new String[5];
-	private char alternativaCorreta;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	private String fenInicial;
+    public Long getProvaId() {
+        return provaId;
+    }
 
-	public String getFenInicial() {
-		return fenInicial;
-	}
+    public void setProvaId(Long provaId) {
+        this.provaId = provaId;
+    }
 
-	public void setFenInicial(String fenInicial) {
-		this.fenInicial = fenInicial;
-	}
+    public String getEnunciado() {
+        return enunciado;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public void setEnunciado(String enunciado) {
+        this.enunciado = enunciado;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public String[] getAlternativas() {
+        return alternativas;
+    }
 
-	public long getProvaId() {
-		return provaId;
-	}
+    public void setAlternativas(String[] alternativas) {
+        this.alternativas = alternativas;
+    }
 
-	public void setProvaId(long provaId) {
-		this.provaId = provaId;
-	}
+    public char getAlternativaCorreta() {
+        return alternativaCorreta;
+    }
 
-	public String getEnunciado() {
-		return enunciado;
-	}
+    public void setAlternativaCorreta(char alternativaCorreta) {
+        this.alternativaCorreta = alternativaCorreta;
+    }
 
-	public void setEnunciado(String enunciado) {
-		this.enunciado = enunciado;
-	}
+    public String getFenInicial() {
+        return fenInicial;
+    }
 
-	public String[] getAlternativas() {
-		return alternativas;
-	}
+    public void setFenInicial(String fenInicial) {
+        this.fenInicial = fenInicial;
+    }
 
-	public void setAlternativas(String[] alternativas) {
-		if (alternativas == null || alternativas.length != 5) {
-			throw new IllegalArgumentException("A questão deve possuir exatamente 5 alternativas.");
-		}
-		this.alternativas = Arrays.copyOf(alternativas, 5);
-	}
+    public boolean isRespostaCorreta(char marcada) {
+        return marcada == alternativaCorreta;
+    }
 
-	public char getAlternativaCorreta() {
-		return alternativaCorreta;
-	}
-
-	public void setAlternativaCorreta(char alternativaCorreta) {
-		this.alternativaCorreta = normalizar(alternativaCorreta);
-	}
-
-	public boolean isRespostaCorreta(char marcada) {
-		return normalizar(marcada) == alternativaCorreta;
-	}
-
-	public static char normalizar(char c) {
-		char up = Character.toUpperCase(c);
-		if (up < 'A' || up > 'E') {
-			throw new IllegalArgumentException("Alternativa deve estar entre A e E.");
-		}
-		return up;
-	}
-
+    public static char normalizar(char c) {
+        return Character.toUpperCase(c);
+    }
 }

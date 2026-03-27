@@ -4,38 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tentativa {
-	private long id;
-	private long participanteId;
-	private long provaId;
+    private Long id;
+    private Long participanteId;
+    private Long provaId;
+    private List<Resposta> respostas = new ArrayList<>();
 
-	private final List<Resposta> respostas = new ArrayList<>();
+    public Long getId() {
+        return id;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public Long getParticipanteId() {
+        return participanteId;
+    }
 
-	public long getParticipanteId() {
-		return participanteId;
-	}
+    public void setParticipanteId(Long participanteId) {
+        this.participanteId = participanteId;
+    }
 
-	public void setParticipanteId(long participanteId) {
-		this.participanteId = participanteId;
-	}
+    public Long getProvaId() {
+        return provaId;
+    }
 
-	public long getProvaId() {
-		return provaId;
-	}
+    public void setProvaId(Long provaId) {
+        this.provaId = provaId;
+    }
 
-	public void setProvaId(long provaId) {
-		this.provaId = provaId;
-	}
+    public List<Resposta> getRespostas() {
+        return respostas;
+    }
 
-	public List<Resposta> getRespostas() {
-		return respostas;
-	}
-
+    public void setRespostas(List<Resposta> respostas) {
+        this.respostas = respostas;
+    }
 }
