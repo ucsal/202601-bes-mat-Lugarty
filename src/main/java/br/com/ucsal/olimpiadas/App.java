@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import br.com.ucsal.olimpiadas.domain.*;
+
 public class App {
 
 	static long proximoParticipanteId = 1;
