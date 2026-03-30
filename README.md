@@ -1,4 +1,3 @@
-markdown
 # Sistema das Olimpíadas – Refatoração SOLID
 
 Refatoração do código legado aplicando os princípios SOLID, sem alterar a lógica de negócio.
@@ -10,11 +9,13 @@ src/main/java/br/com/ucsal/olimpiadas/
 ├── domain/ # Entidades de domínio
 │ ├── Participante.java
 │ ├── Prova.java
-│ ├── Questao.java # Interface (novo)
-│ ├── QuestaoMultiplaEscolha.java # Implementação concreta (antiga Questao)
+│ ├── Questao.java # Interface (OCP/LSP)
+│ ├── QuestaoMultiplaEscolha.java # Implementação concreta
 │ ├── Resposta.java
 │ └── Tentativa.java
 ├── repository/ # Interfaces de persistência
+│ ├── ReadOnlyRepository.java # ISP: leitura
+│ ├── WriteRepository.java # ISP: escrita
 │ ├── ParticipanteRepository.java
 │ ├── ProvaRepository.java
 │ ├── QuestaoRepository.java
@@ -39,6 +40,7 @@ src/main/java/br/com/ucsal/olimpiadas/
   - **App** – apenas interface com o usuário (menus e entrada/saída).
 - Inversão de dependência: os serviços dependem de abstrações (interfaces) de repositórios, não de implementações concretas.
 - Criação da interface `Questao` e renomeação da classe original para `QuestaoMultiplaEscolha`, permitindo que novos tipos de questão sejam adicionados sem modificar o código existente (OCP) e garantindo que qualquer implementação de `Questao` possa ser usada no lugar da original (LSP).
+- Segregação das interfaces de repositório em `ReadOnlyRepository` (leitura) e `WriteRepository` (escrita), aplicando o ISP.
 
 ## Princípios SOLID Aplicados
 
@@ -58,14 +60,15 @@ src/main/java/br/com/ucsal/olimpiadas/
 - **Depois**: a interface `Questao` define o contrato e a classe `QuestaoMultiplaEscolha` o implementa. Qualquer outra implementação (ex: `QuestaoVerdadeiroFalso`) pode ser usada onde `Questao` é esperada, sem quebrar o comportamento do sistema.
 
 ### I – Interface Segregation Principle (ISP)
-*(A ser aplicado no próximo commit – segregar interfaces de repositório em leitura e escrita)*
+- **Antes**: as interfaces de repositório possuíam todos os métodos juntos (`save`, `findById`, `findAll`), forçando qualquer implementação a conter todos.
+- **Depois**: segregado os métodos em duas interfaces: `ReadOnlyRepository` (com `findById` e `findAll`) e `WriteRepository` (com `save`). As interfaces de repositório agora estendem ambas, mas classes que precisem apenas de leitura podem depender apenas de `ReadOnlyRepository`, evitando dependências desnecessárias.
 
 ### D – Dependency Inversion Principle (DIP)
 - **Antes**: `App` dependia diretamente de listas estáticas e implementações concretas de armazenamento.
 - **Depois**: 
   - Criadas interfaces para repositórios (`ParticipanteRepository`, `ProvaRepository`, etc.).
   - Os serviços recebem essas interfaces via construtor (injeção de dependência).
-  - No `main`, instanciamos as implementações concretas (`InMemory*Repository`) e injetamos nos serviços. Assim, é fácil trocar a forma de persistência sem alterar os serviços.
+  - No `main`, instanciado as implementações concretas (`InMemory*Repository`) e injetado nos serviços. Assim, é fácil trocar a forma de persistência sem alterar os serviços.
 
 ## Histórico de Commits
 
@@ -74,6 +77,7 @@ src/main/java/br/com/ucsal/olimpiadas/
 | **Commit 1** | Organização do código em pacotes (`domain`, `service`, `repository`, `ui`) e movimentação das classes de modelo para `domain`. | `App.java`, `Participante.java`, `Prova.java`, `Questao.java`, `Tentativa.java`, `Resposta.java` (movidos para `domain/`) |
 | **Commit 2** | Aplicação de SRP e DIP – criação de repositórios e serviços; separação da lógica de negócio e persistência da classe `App`. | `ParticipanteRepository.java`, `ProvaRepository.java`, `QuestaoRepository.java`, `TentativaRepository.java` (interfaces)<br>`InMemoryParticipanteRepository.java`, `InMemoryProvaRepository.java`, `InMemoryQuestaoRepository.java`, `InMemoryTentativaRepository.java` (impl)<br>`ParticipanteService.java`, `ProvaService.java`, `QuestaoService.java`, `TentativaService.java`<br>`App.java` (refatorado) |
 | **Commit 3** | Aplicação de OCP e LSP – criação da interface `Questao` e renomeação da classe original para `QuestaoMultiplaEscolha`. | `Questao.java` (transformada em interface)<br>`QuestaoMultiplaEscolha.java` (renomeada e adaptada)<br>`App.java` (ajustes para usar a nova implementação)<br>`QuestaoService.java` (ajuste para criar `QuestaoMultiplaEscolha`)<br>`TentativaService.java` (ajuste para usar a interface `Questao`) |
+| **Commit 4** | Aplicação de ISP – segregação das interfaces de repositório em `ReadOnlyRepository` e `WriteRepository`. | `ReadOnlyRepository.java`, `WriteRepository.java` (criadas)<br>`ParticipanteRepository.java`, `ProvaRepository.java`, `QuestaoRepository.java`, `TentativaRepository.java` (ajustadas para estender as interfaces segregadas) |
 
 ## Autor
 - Nome: Anísio Oliveira Albuquerque Filho
