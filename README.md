@@ -5,31 +5,31 @@ Refatoração do código legado aplicando os princípios SOLID, sem alterar a l�
 ## Estrutura do Projeto
 
 src/main/java/br/com/ucsal/olimpiadas/
-├── App.java                           # Classe principal (UI)
-├── domain/                            # Entidades de domínio
-│   ├── Participante.java
-│   ├── Prova.java
-│   ├── Questao.java                   # Interface (OCP/LSP)
-│   ├── QuestaoMultiplaEscolha.java    # Implementação concreta
-│   ├── Resposta.java
-│   └── Tentativa.java
-├── repository/                        # Interfaces de persistência
-│   ├── ReadOnlyRepository.java        # ISP: leitura
-│   ├── WriteRepository.java           # ISP: escrita
-│   ├── ParticipanteRepository.java
-│   ├── ProvaRepository.java
-│   ├── QuestaoRepository.java
-│   └── TentativaRepository.java
-├── repository/impl/                   # Implementações em memória
-│   ├── InMemoryParticipanteRepository.java
-│   ├── InMemoryProvaRepository.java
-│   ├── InMemoryQuestaoRepository.java
-│   └── InMemoryTentativaRepository.java
-└── service/                           # Regras de negócio
-    ├── ParticipanteService.java
-    ├── ProvaService.java
-    ├── QuestaoService.java
-    └── TentativaService.java
+├── App.java # Classe principal (UI)
+├── domain/ # Entidades de domínio
+│ ├── Participante.java
+│ ├── Prova.java
+│ ├── Questao.java # Interface (OCP/LSP)
+│ ├── QuestaoMultiplaEscolha.java # Implementação concreta
+│ ├── Resposta.java
+│ └── Tentativa.java
+├── repository/ # Interfaces de persistência
+│ ├── ReadOnlyRepository.java # ISP: leitura
+│ ├── WriteRepository.java # ISP: escrita
+│ ├── ParticipanteRepository.java
+│ ├── ProvaRepository.java
+│ ├── QuestaoRepository.java
+│ └── TentativaRepository.java
+├── repository/impl/ # Implementações em memória
+│ ├── InMemoryParticipanteRepository.java
+│ ├── InMemoryProvaRepository.java
+│ ├── InMemoryQuestaoRepository.java
+│ └── InMemoryTentativaRepository.java
+└── service/ # Regras de negócio
+├── ParticipanteService.java
+├── ProvaService.java
+├── QuestaoService.java
+└── TentativaService.java
 
 ## Principais Mudanças
 
