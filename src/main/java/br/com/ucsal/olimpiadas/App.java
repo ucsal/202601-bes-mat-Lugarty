@@ -106,7 +106,7 @@ public class App {
         System.out.print("Alternativa correta (A–E): ");
         char correta;
         try {
-            correta = Questao.normalizar(in.nextLine().trim().charAt(0));
+            correta = QuestaoMultiplaEscolha.normalizar(in.nextLine().trim().charAt(0));
         } catch (Exception e) {
             System.out.println("alternativa inválida");
             return;
@@ -147,17 +147,22 @@ public class App {
         for (var q : questoesDaProva) {
             System.out.println("\nQuestão #" + q.getId());
             System.out.println(q.getEnunciado());
-            System.out.println("Posição inicial:");
-            imprimirTabuleiroFen(q.getFenInicial());
 
-            for (var alt : q.getAlternativas()) {
-                System.out.println(alt);
+            // Apenas para questões do tipo múltipla escolha, exibimos alternativas e tabuleiro
+            if (q instanceof QuestaoMultiplaEscolha) {
+                QuestaoMultiplaEscolha qme = (QuestaoMultiplaEscolha) q;
+                System.out.println("Posição inicial:");
+                imprimirTabuleiroFen(qme.getFenInicial());
+
+                for (var alt : qme.getAlternativas()) {
+                    System.out.println(alt);
+                }
             }
 
             System.out.print("Sua resposta (A–E): ");
             char marcada;
             try {
-                marcada = Questao.normalizar(in.nextLine().trim().charAt(0));
+                marcada = QuestaoMultiplaEscolha.normalizar(in.nextLine().trim().charAt(0));
             } catch (Exception e) {
                 System.out.println("resposta inválida (marcando como errada)");
                 marcada = 'X';
@@ -262,11 +267,9 @@ public class App {
     }
 
     private void seed() {
-        // Cria uma prova inicial
         var prova = provaService.criar("Olimpíada 2026 • Nível 1 • Prova A");
 
-        // Cria a questão
-        var q = new Questao();
+        var q = new QuestaoMultiplaEscolha();
         q.setProvaId(prova.getId());
         q.setEnunciado("""
                 Questão 1 — Mate em 1.

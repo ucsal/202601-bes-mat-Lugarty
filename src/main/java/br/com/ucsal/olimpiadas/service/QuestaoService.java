@@ -1,6 +1,7 @@
 package br.com.ucsal.olimpiadas.service;
 
 import br.com.ucsal.olimpiadas.domain.Questao;
+import br.com.ucsal.olimpiadas.domain.QuestaoMultiplaEscolha;
 import br.com.ucsal.olimpiadas.repository.QuestaoRepository;
 import java.util.List;
 
@@ -11,8 +12,9 @@ public class QuestaoService {
         this.repository = repository;
     }
 
+    // Mantém o método original que o App espera
     public Questao adicionarQuestao(Long provaId, String enunciado, String[] alternativas, char alternativaCorreta) {
-        Questao q = new Questao();
+        QuestaoMultiplaEscolha q = new QuestaoMultiplaEscolha();
         q.setProvaId(provaId);
         q.setEnunciado(enunciado);
         q.setAlternativas(alternativas);

@@ -11,7 +11,9 @@ public class InMemoryQuestaoRepository implements QuestaoRepository {
     @Override
     public Questao save(Questao questao) {
         if (questao.getId() == null) {
-            questao.setId(currentId++);
+            if (questao instanceof br.com.ucsal.olimpiadas.domain.QuestaoMultiplaEscolha) {
+                ((br.com.ucsal.olimpiadas.domain.QuestaoMultiplaEscolha) questao).setId(currentId++);
+            }
         }
         store.put(questao.getId(), questao);
         return questao;
